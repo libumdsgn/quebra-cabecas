@@ -208,36 +208,5 @@ func _salvar_estado() -> void:
 		push_error("Erro ao salvar estado em %s" % path)
 
 func _carregar_estado_salvo() -> void:
-	var path = "user://save_level_%d.json" % nivel
-	if not FileAccess.file_exists(path):
-		return
-	var file = FileAccess.open(path, FileAccess.ModeFlags.READ)
-	if not file:
-		push_error("Erro ao abrir save em %s" % path)
-		return
-	var text = file.get_as_text()
-	file.close()
-	var parsed = JSON.parse_string(text)
-	if parsed.error != OK:
-		push_error("Erro ao parsear JSON do save: %s" % str(parsed.error))
-		return
-	var data = parsed.result
-	# aplica posições salvas
-	if not data.has("cells"):
-		return
-	# cria mapa id -> pos para aplicar
-	var id_to_pos = {}
-	for item in data["cells"]:
-		id_to_pos[int(item["id"])] = Vector2i(int(item["pos"][0]), int(item["pos"][1]))
-
-	# aplica para cada célula instanciada
-	for c in cells:
-		var target = id_to_pos.get(int(c.id), null)
-		if target != null:
-			c.posicao = target
-			c.rect_position = _grid_to_rect_pos(target)
-	# atualiza referência vazia (procura novamente a célula com is_empty)
-	for c in cells:
-		if "is_empty" in c and c.is_empty:
-			empty_cell = c
-			break
+	pass
+	
