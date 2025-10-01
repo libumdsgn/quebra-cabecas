@@ -30,7 +30,7 @@ Usar ilustrações da Shaya embaralhadas para formar quebra cabeças que possam 
 
 ## Interface(UI/UX)
 
-[Figma do projeto](https://www.figma.com/design/7K720eCu4a9SX7GxhKhMuN/Jogo-da-memoria?node-id=0-1&t=w87rChMztRNxa3A3-1)
+[Figma do projeto](https://www.figma.com/design/qUzB22NMLZ3mnMnucuw0dy/Puzzle-Shaya?node-id=0-1&t=6npVd6lqNKwZbXcX-1)
 
 # 5. Design de níveis
 
