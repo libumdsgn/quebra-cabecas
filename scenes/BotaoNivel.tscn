@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://devjft14b0xg2"]
+
+[ext_resource type="StyleBox" uid="uid://bf0m70wqpgy3v" path="res://assets/textures/LevelButton_PlaceHolder.tres" id="2_emfp6"]
+
+[sub_resource type="Theme" id="Theme_emfp6"]
+
+[node name="BotaoNivel" type="Control"]
+layout_mode = 3
+anchor_right = 0.24800001
+anchor_bottom = 0.24800001
+offset_right = 0.3039856
+offset_bottom = 0.29599
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_emfp6")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 285.98465
+offset_bottom = 162.0
+theme_override_styles/panel = ExtResource("2_emfp6")
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 101.0
+offset_top = 59.0
+offset_right = 160.0
+offset_bottom = 90.0
+text = "nivel 1"

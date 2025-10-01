@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://cv4v10uwx78hr"]
+
+[ext_resource type="Script" uid="uid://c8iuk1qxwevug" path="res://scripts/BoardConfig.gd" id="1_2nr0e"]
+
+[resource]
+script = ExtResource("1_2nr0e")
+cell_layout = Array[Dictionary]([{}, {}, {}])

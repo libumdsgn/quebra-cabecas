@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://jgjo70qp5qrp"]
+
+[ext_resource type="PackedScene" uid="uid://devjft14b0xg2" path="res://scenes/BotaoNivel.tscn" id="1_gdal1"]
+[ext_resource type="Script" uid="uid://drd3g3uu244in" path="res://scripts/Niveis.gd" id="1_gqd4y"]
+
+[node name="Niveis" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gqd4y")
+
+[node name="BotaoNivel" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1

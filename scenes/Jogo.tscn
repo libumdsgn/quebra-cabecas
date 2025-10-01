@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://tpx5tqknp1rq"]
+
+[ext_resource type="Script" uid="uid://dnm2barmk8wnx" path="res://scripts/Jogo.gd" id="1_eopmu"]
+
+[node name="Jogo" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eopmu")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Voltar"
