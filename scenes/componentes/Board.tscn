@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjnmcg630poyy"]
+
+[ext_resource type="Script" uid="uid://cr3s36h31gmvm" path="res://scripts/Board.gd" id="1_vsa3e"]
+[ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_vsa3e"]
+
+[node name="Board" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_vsa3e")
+metadata/_edit_horizontal_guides_ = [58.0, 1033.0]
+metadata/_edit_vertical_guides_ = [303.0, 1630.0]
+
+[node name="Background" parent="." instance=ExtResource("2_vsa3e")]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Voltar"

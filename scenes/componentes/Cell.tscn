@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://gldfshi43egn"]
+
+[ext_resource type="Script" uid="uid://be5hu42yxbjrj" path="res://scripts/Cell.gd" id="1_f2m7x"]
+
+[node name="Cell" type="TextureButton"]
+offset_right = 474.0
+offset_bottom = 400.0
+script = ExtResource("1_f2m7x")

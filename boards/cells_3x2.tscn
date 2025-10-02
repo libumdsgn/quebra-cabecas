@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0ia54sqoid6t"]
+
+[ext_resource type="PackedScene" uid="uid://gldfshi43egn" path="res://scenes/componentes/Cell.tscn" id="1_y3m76"]
+
+[node name="Cells2x3" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Cell" parent="." instance=ExtResource("1_y3m76")]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 144.0
+offset_right = 746.0
+offset_bottom = 544.0
+id = 1
+
+[node name="Cell2" parent="." instance=ExtResource("1_y3m76")]
+layout_mode = 0
+offset_left = 760.0
+offset_top = 144.0
+offset_right = 1234.0
+offset_bottom = 544.0
+id = 2
+
+[node name="Cell3" parent="." instance=ExtResource("1_y3m76")]
+layout_mode = 0
+offset_left = 1248.0
+offset_top = 144.0
+offset_right = 1722.0
+offset_bottom = 544.0
+id = 3
+
+[node name="Cell4" parent="." instance=ExtResource("1_y3m76")]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 560.0
+offset_right = 746.0
+offset_bottom = 960.0
+id = 4
+
+[node name="Cell5" parent="." instance=ExtResource("1_y3m76")]
+custom_minimum_size = Vector2(474, 400)
+layout_mode = 0
+offset_left = 760.0
+offset_top = 560.0
+offset_right = 1234.0
+offset_bottom = 960.0
+id = 5
+
+[node name="Cell6" parent="." instance=ExtResource("1_y3m76")]
+custom_minimum_size = Vector2(474, 400)
+layout_mode = 0
+offset_left = 1248.0
+offset_top = 560.0
+offset_right = 1722.0
+offset_bottom = 960.0
+id = 6
+is_empty = true

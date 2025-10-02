@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://jgjo70qp5qrp"]
+
+[ext_resource type="PackedScene" uid="uid://devjft14b0xg2" path="res://scenes/BotaoNivel.tscn" id="1_gdal1"]
+[ext_resource type="Script" uid="uid://drd3g3uu244in" path="res://scripts/Niveis.gd" id="1_gqd4y"]
+[ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_eev7p"]
+
+[node name="Niveis" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gqd4y")
+
+[node name="Background" parent="." instance=ExtResource("2_eev7p")]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="BotaoNivel" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 73.0
+offset_top = 418.0
+offset_right = 131.04001
+offset_bottom = 558.96
+
+[node name="BotaoNivel2" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 524.0
+offset_top = 234.0
+offset_right = 582.04
+offset_bottom = 374.96002
+text = "2"
+
+[node name="BotaoNivel3" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 973.0
+offset_top = 431.0
+offset_right = 1031.04
+offset_bottom = 571.96
+text = "3"

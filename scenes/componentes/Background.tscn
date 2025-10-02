@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dervolcxhwh4"]
+
+[ext_resource type="Texture2D" uid="uid://cq51vjrjaqbo0" path="res://assets/ui/Background.png" id="1_cstlw"]
+
+[node name="Background" type="TextureRect"]
+texture = ExtResource("1_cstlw")

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxjkjt40hbf5k"]
+
+[ext_resource type="Script" uid="uid://kuxr3038uo30" path="res://scripts/Splash.gd" id="1_y4yub"]
+[ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_0ollq"]
+[ext_resource type="Texture2D" uid="uid://d0ky8o3bxxxb1" path="res://assets/ui/btn_jogar.png" id="2_ad0hg"]
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y4yub")
+
+[node name="Background" parent="." instance=ExtResource("2_0ollq")]
+layout_mode = 0
+
+[node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 613.0
+offset_top = 800.0
+offset_right = 1393.0
+offset_bottom = 951.0
+texture_normal = ExtResource("2_ad0hg")
