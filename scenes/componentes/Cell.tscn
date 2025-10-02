@@ -3,6 +3,6 @@
 [ext_resource type="Script" uid="uid://be5hu42yxbjrj" path="res://scripts/Cell.gd" id="1_f2m7x"]
 
 [node name="Cell" type="TextureButton"]
-offset_right = 20.0
-offset_bottom = 20.0
+offset_right = 474.0
+offset_bottom = 474.0
 script = ExtResource("1_f2m7x")
