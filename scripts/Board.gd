@@ -207,6 +207,25 @@ func _on_victory() -> void:
 	# placeholder: comportamento quando o puzzle é resolvido
 	print("Puzzle resolvido! (nível %d)" % nivel)
 	# aqui você pode notificar o GameManager, tocar som, abrir tela de vitória, etc.
+	_desbloquear_nivel()
+	_on_voltar_pressed()
+
+func _desbloquear_nivel():
+	var next_lvl = GameState.current_level + 1
+	var next_lvl_ja_liberado = false
+	for board_lvl in GameState.board_setup:
+		print("board_lvl: ", board_lvl)
+		print("board_lvl[nivel] ", board_lvl["nivel"])
+		if board_lvl["nivel"] == next_lvl:
+			next_lvl_ja_liberado = true
+	
+	if not next_lvl_ja_liberado:
+		var new_lvl = {
+			"nivel": next_lvl, 
+			"ordem":[],
+		}
+		GameState.board_setup.append(new_lvl)
+
 
 # -------------------------
 # Salvamento automático (user://)

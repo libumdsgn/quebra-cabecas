@@ -10,13 +10,18 @@ func _ready():
 	_conecta_botoes_de_nveis()
 	
 func _set_niveis():
+	print("Entrandon em _set_niveis() ")
 	for child in get_children():
 		if child is Button and "BotaoNivel" in child.name:
 			for board in GameState.board_setup:
-				if str(child.text) != str(board["nivel"]): 
-					child.disabled = true
-				else:
-					push_warning("Nivel Conquistado")
+				print("board: ", board)
+				print("GameState.board_setup: ", GameState.board_setup)
+				if str(child.text) == str(board["nivel"]): 
+					child.disabled = false
+					child.button_pressed = true
+					print("Habilitando Botao: ", child.text)
+					push_warning("Nivel Conquistado: ", child.text)
+					
 		else:
 			push_warning("Child não é nível: ", child)
 	
