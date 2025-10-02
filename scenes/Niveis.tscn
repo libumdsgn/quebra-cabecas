@@ -19,24 +19,27 @@ script = ExtResource("1_gqd4y")
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 
 [node name="BotaoNivel" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
 offset_left = 73.0
 offset_top = 418.0
-offset_right = 73.303955
-offset_bottom = 418.29596
+offset_right = 131.04001
+offset_bottom = 558.96
 
 [node name="BotaoNivel2" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
 offset_left = 524.0
 offset_top = 234.0
-offset_right = 524.30396
-offset_bottom = 234.29596
+offset_right = 582.04
+offset_bottom = 374.96002
+text = "2"
 
 [node name="BotaoNivel3" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
 offset_left = 973.0
 offset_top = 431.0
-offset_right = 973.30396
-offset_bottom = 431.29596
+offset_right = 1031.04
+offset_bottom = 571.96
+text = "3"
