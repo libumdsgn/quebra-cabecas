@@ -2,7 +2,7 @@ extends Control
 
 @export var nivel: int = 1  # usado no nome do arquivo de save (user://save_level_X.json)
 
-@onready var cells_container = $Cells
+@onready var cells_container = $Cells2x2
 
 var main_ref 
 var cells: Array = []                # lista de nós Cell

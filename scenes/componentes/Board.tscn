@@ -1,33 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjnmcg630poyy"]
+[gd_scene load_steps=4 format=3 uid="uid://cjnmcg630poyy"]
 
-[ext_resource type="PackedScene" uid="uid://gldfshi43egn" path="res://scenes/componentes/Cell.tscn" id="1_m8p8g"]
 [ext_resource type="Script" uid="uid://cr3s36h31gmvm" path="res://scripts/Board.gd" id="1_vsa3e"]
+[ext_resource type="PackedScene" uid="uid://draopuydvh2by" path="res://boards/cells_2x2.tscn" id="2_gkdw1"]
+[ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_vsa3e"]
 
 [node name="Board" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 646.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_vsa3e")
+metadata/_edit_horizontal_guides_ = [58.0, 1033.0]
+metadata/_edit_vertical_guides_ = [303.0, 1630.0]
 
-[node name="Cells" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 1154.0
-offset_bottom = 649.0
-
-[node name="Cell" parent="Cells" instance=ExtResource("1_m8p8g")]
+[node name="Background" parent="." instance=ExtResource("2_vsa3e")]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 28.0
-offset_right = 555.0
-offset_bottom = 502.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
-[node name="Cell2" parent="Cells" instance=ExtResource("1_m8p8g")]
-layout_mode = 0
-offset_left = 579.0
-offset_top = 35.0
-offset_right = 1053.0
-offset_bottom = 509.0
+[node name="Cells2x2" parent="." instance=ExtResource("2_gkdw1")]
+layout_mode = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0

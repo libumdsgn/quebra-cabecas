@@ -4,5 +4,5 @@
 
 [node name="Cell" type="TextureButton"]
 offset_right = 474.0
-offset_bottom = 474.0
+offset_bottom = 400.0
 script = ExtResource("1_f2m7x")
