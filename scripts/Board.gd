@@ -19,7 +19,8 @@ func _ready() -> void:
 	
 	var cena_tabuleiro = _define_tabuleiro()
 	mapear_celulas(cena_tabuleiro)
-	_carregar_estado_salvo()
+	_shuffle()
+	#_carregar_estado_salvo()
 
 func _define_tabuleiro():
 	# define qual tabuleiro instanciar com base no nivel atual
@@ -87,6 +88,7 @@ func mapear_celulas(cells_container) -> void:
 		else:
 			c.posicao = grid_pos
 			c.rect_position = Vector2(unique_xs[col], unique_ys[row])
+			
 
 		# registra referência
 		cells.append(c)
@@ -94,8 +96,20 @@ func mapear_celulas(cells_container) -> void:
 		# marca célula vazia
 		if "is_empty" in c and c.is_empty:
 			empty_cell = c
-
-		# conecta o sinal 'clicked' que o Cell emite (veja Cell.gd)
+		# Adiciona textura da pasta correspondente aqui
+		var img_index = cells.size()
+		var level_path = "res://assets/images/level_%d/%d.png" % [GameState.current_level, img_index]
+		
+		if FileAccess.file_exists(level_path) and c.is_empty == false:
+			var tex = load(level_path)
+			if "texture_normal" in c:
+				c.texture_normal = tex
+				print("Atribuindo imagem a celula: ", c)
+				print("/Imagem: ", level_path)
+				print("Posição dessa celula: ", c.posicao)
+		else:
+			push_warning("Imagem não encontrada para célula %s: %s" % [c.name, level_path])
+		
 		# conecta o sinal 'clicked' que o Cell emite (veja Cell.gd)
 		if c.has_signal("clicked"):
 			# o signal 'clicked' do Cell emite a própria célula, então basta conectar o Callable
@@ -220,4 +234,43 @@ func _salvar_estado() -> void:
 
 func _carregar_estado_salvo() -> void:
 	pass
-	
+
+func _shuffle(movimentos: int = 100) -> void:
+	if empty_cell == null or cells.size() == 0:
+		push_warning("Não é possível embaralhar: célula vazia ou células não definidas.")
+		return
+
+	var last_cell = null  # para evitar mover a mesma célula de volta imediatamente
+
+	for i in range(movimentos):
+		# coleta células vizinhas ao espaço vazio
+		var neighbors = []
+		for c in cells:
+			if _is_neighbor(c, empty_cell):
+				# evita voltar o movimento anterior imediatamente
+				if last_cell and c == last_cell:
+					continue
+				neighbors.append(c)
+		
+		if neighbors.size() == 0:
+			continue
+		
+		# escolhe uma célula aleatória para mover
+		var escolha = neighbors[randi() % neighbors.size()]
+		_swap_with_empty(escolha)
+		last_cell = empty_cell  # a célula que acabou de ser vazia agora será a "proibida" no próximo loop
+
+	# após shuffle, garantir que não esteja resolvido
+	if _is_solved():
+		# se ainda estiver resolvido, inverte duas células aleatórias que não sejam a vazia
+		var non_empty = []
+		for c in cells:
+			if not c.is_empty:
+				non_empty.append(c)
+		if non_empty.size() >= 2:
+			var a = non_empty[randi() % non_empty.size()]
+			var b = non_empty[randi() % non_empty.size()]
+			while b == a:
+				b = non_empty[randi() % non_empty.size()]
+			_swap_with_empty(a)
+			_swap_with_empty(b)
