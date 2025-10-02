@@ -7,5 +7,5 @@ var tipo_boards = {
 
 var nivel_config ={
 	1: tipo_boards["DEFAULT"],
-	2: tipo_boards["3X2"],
+	2: tipo_boards["3X2"]
 }

@@ -28,6 +28,6 @@ func _conecta_botoes_de_nveis():
 			push_warning("Não conectado: ", child)
 
 func _on_botao_nivel_clicado(botao):
-	# aqui você sabe qual botão foi clicado
-	print("Botão clicado:", botao.name)
+	print("Botão clicado:", botao.text)
+	GameState.current_level = botao.text
 	main_ref.trocar_para("res://scenes/componentes/Board.tscn")

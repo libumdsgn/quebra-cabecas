@@ -7,4 +7,3 @@ func _ready():
 
 func _on_pressed():
 	emit_signal("clicked", self)
-	print("I was pressed: ", self)
