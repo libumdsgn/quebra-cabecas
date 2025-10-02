@@ -19,7 +19,9 @@ func _ready() -> void:
 	
 	var cena_tabuleiro = _define_tabuleiro()
 	mapear_celulas(cena_tabuleiro)
+	_print_puzzle_state_for_debug("Estado Inicial (Após Mapeamento)")
 	_shuffle()
+	_print_puzzle_state_for_debug("Estado Após Shuffle")
 	#_carregar_estado_salvo()
 
 func _define_tabuleiro():
@@ -253,43 +255,169 @@ func _salvar_estado() -> void:
 
 func _carregar_estado_salvo() -> void:
 	pass
-
 func _shuffle(movimentos: int = 100) -> void:
 	if empty_cell == null or cells.size() == 0:
 		push_warning("Não é possível embaralhar: célula vazia ou células não definidas.")
 		return
 
-	var last_cell = null  # para evitar mover a mesma célula de volta imediatamente
+	# Garante que o puzzle comece em um estado resolvido
+	_reset_to_solved_state()
 
+	var last_moved_cell = null  # Para evitar mover a mesma célula de volta imediatamente
+
+	# Realiza um número de movimentos aleatórios válidos
 	for i in range(movimentos):
-		# coleta células vizinhas ao espaço vazio
 		var neighbors = []
 		for c in cells:
 			if _is_neighbor(c, empty_cell):
-				# evita voltar o movimento anterior imediatamente
-				if last_cell and c == last_cell:
+				# Evita mover a célula que acabou de ser movida para o espaço vazio
+				if last_moved_cell != null and c == last_moved_cell:
 					continue
 				neighbors.append(c)
 		
 		if neighbors.size() == 0:
 			continue
 		
-		# escolhe uma célula aleatória para mover
-		var escolha = neighbors[randi() % neighbors.size()]
-		_swap_with_empty(escolha)
-		last_cell = empty_cell  # a célula que acabou de ser vazia agora será a "proibida" no próximo loop
+		var cell_to_move = neighbors[randi() % neighbors.size()]
+		_swap_with_empty(cell_to_move)
+		# A célula que era vazia agora contém o tile movido, então ela é a 'last_moved_cell' para o próximo loop
+		last_moved_cell = cell_to_move
 
-	# após shuffle, garantir que não esteja resolvido
-	if _is_solved():
-		# se ainda estiver resolvido, inverte duas células aleatórias que não sejam a vazia
-		var non_empty = []
+	# Após o embaralhamento, verifica a solubilidade e ajusta se necessário
+	# Se o estado não for solúvel, realiza uma troca de duas peças (não vazias) para alterar a paridade
+	# Isso garante que o puzzle se torne solúvel sem alterar a posição da célula vazia
+	if not _is_solvable_state():
+		var non_empty_cells = []
 		for c in cells:
 			if not c.is_empty:
-				non_empty.append(c)
-		if non_empty.size() >= 2:
-			var a = non_empty[randi() % non_empty.size()]
-			var b = non_empty[randi() % non_empty.size()]
-			while b == a:
-				b = non_empty[randi() % non_empty.size()]
-			_swap_with_empty(a)
-			_swap_with_empty(b)
+				non_empty_cells.append(c)
+		
+		# Precisa de pelo menos duas peças não vazias para trocar
+		if non_empty_cells.size() >= 2:
+			var cell1 = non_empty_cells[0]
+			var cell2 = non_empty_cells[1]
+			
+			# Troca as posições lógicas de cell1 e cell2
+			var temp_pos = cell1.posicao
+			cell1.posicao = cell2.posicao
+			cell2.posicao = temp_pos
+			
+			# Atualiza as posições visuais (sem animação, pois é um ajuste pós-embaralhamento)
+			cell1.rect_position = _grid_to_rect_pos(cell1.posicao)
+			cell2.rect_position = _grid_to_rect_pos(cell2.posicao)
+		else:
+			push_warning("Não foi possível garantir a solubilidade: menos de duas células não vazias para trocar.")
+
+	# Garante que o puzzle não esteja resolvido após o embaralhamento (e possível ajuste de paridade)
+	if _is_solved():
+		# Se ainda estiver resolvido, faz um movimento extra para garantir que não esteja
+		var neighbors = []
+		for c in cells:
+			if _is_neighbor(c, empty_cell):
+				neighbors.append(c)
+		
+		if neighbors.size() > 0:
+			var cell_to_move = neighbors[randi() % neighbors.size()]
+			_swap_with_empty(cell_to_move)
+
+
+func _reset_to_solved_state() -> void:
+	# Primeiro, coloca todas as células em suas posições finais baseadas no ID.
+	# A célula vazia (com is_empty = true) deve ir para a última posição.
+
+	var current_cell_positions = {}
+	for c in cells:
+		current_cell_positions[c] = c.posicao
+
+	var solved_positions = {}
+	var empty_cell_target_pos = Vector2i(colunas - 1, linhas - 1)
+
+	for c in cells:
+		if c.is_empty:
+			solved_positions[c] = empty_cell_target_pos
+		else:
+			# As células não vazias devem ir para suas posições finais baseadas no ID
+			solved_positions[c] = _id_para_posicao_final(int(c.id))
+
+	# Aplica as novas posições lógicas e visuais
+	for c in cells:
+		c.posicao = solved_positions[c]
+		c.position = _grid_to_rect_pos(c.posicao)
+		if c.is_empty:
+			empty_cell = c # Garante que empty_cell esteja corretamente referenciado
+
+	# Verifica se o estado está realmente resolvido após o reset
+	if not _is_solved():
+		push_warning("O estado inicial resolvido não foi configurado corretamente após _reset_to_solved_state.")
+
+
+
+
+
+func _get_inversion_count() -> int:
+	var inversion_count = 0
+	var tile_values = []
+	# Coleta os IDs das células, ignorando a célula vazia
+	for c in cells:
+		if not c.is_empty:
+			tile_values.append(int(c.id))
+
+	for i in range(tile_values.size()):
+		for j in range(i + 1, tile_values.size()):
+			if tile_values[i] > tile_values[j]:
+				inversion_count += 1
+	return inversion_count
+
+func _get_empty_cell_row_from_bottom() -> int:
+	# Retorna a linha da célula vazia contando de baixo para cima (1-indexado)
+	# Se a célula vazia estiver na última linha (row = linhas - 1), retorna 1
+	# Se estiver na penúltima (row = linhas - 2), retorna 2, e assim por diante.
+	if empty_cell == null:
+		return -1 # Erro ou estado inválido
+	return linhas - empty_cell.posicao.y
+
+func _is_solvable_state() -> bool:
+	var inversion_count = _get_inversion_count()
+	var grid_width = colunas
+	var empty_row_from_bottom = _get_empty_cell_row_from_bottom()
+
+	if grid_width % 2 == 1: # Largura ímpar (ex: 3x3, 5x5)
+		return inversion_count % 2 == 0
+	else: # Largura par (ex: 4x4)
+		if empty_row_from_bottom % 2 == 1: # Linha da célula vazia ímpar (de baixo para cima)
+			return inversion_count % 2 == 0
+		else: # Linha da célula vazia par (de baixo para cima)
+			return inversion_count % 2 == 1
+
+
+
+func _print_puzzle_state_for_debug(step_name: String) -> void:
+	print("\n--- DEBUG: %s ---" % step_name)
+	print("Grid atual:")
+	var grid_display = []
+	for r in range(linhas):
+		grid_display.append([])
+		for c in range(colunas):
+			grid_display[r].append("  ") # Placeholder
+
+	for c in cells:
+		var col = c.posicao.x
+		var row = c.posicao.y
+		if c.is_empty:
+			grid_display[row][col] = "EE"
+		else:
+			grid_display[row][col] = str(int(c.id)).pad_zeros(2)
+
+	for r in range(linhas):
+		print(grid_display[r])
+
+	var inv_count = _get_inversion_count()
+	var empty_row = _get_empty_cell_row_from_bottom()
+	var solvable = _is_solvable_state()
+	var solved = _is_solved()
+
+	print("Contagem de Inversões: %d" % inv_count)
+	print("Linha da Célula Vazia (de baixo para cima): %d" % empty_row)
+	print("Estado Solúvel: %s" % str(solvable))
+	print("Estado Resolvido: %s" % str(solved))
+	print("-----------------------\n")
