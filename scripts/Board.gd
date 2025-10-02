@@ -2,8 +2,6 @@ extends Control
 
 @export var nivel: int = 1  # usado no nome do arquivo de save (user://save_level_X.json)
 
-@onready var cells_container = $Cells2x2
-
 var main_ref 
 var cells: Array = []                # lista de nós Cell
 var empty_cell = null                # referência ao nó que tem is_empty == true
@@ -18,9 +16,22 @@ const MOVE_ANIM_SECONDS := 0.16
 
 func _ready() -> void:
 	$Button.pressed.connect(_on_voltar_pressed)
-	# main entry: mapeia as células, tenta carregar estado salvo e finaliza setup
-	mapear_celulas()
+	
+	var cena_tabuleiro = _define_tabuleiro()
+	mapear_celulas(cena_tabuleiro)
 	_carregar_estado_salvo()
+
+func _define_tabuleiro():
+	# define qual tabuleiro instanciar com base no nivel atual
+	var path_tabuleiro_do_nivel = GameParams.nivel_config[GameState.current_level]
+	var tabuleiro_scene = load(path_tabuleiro_do_nivel)
+	
+	if not tabuleiro_scene:
+		push_error("Erro ao carregar o tabuleiro.")
+	
+	var tabuleiro_instance = tabuleiro_scene.instantiate()
+	add_child(tabuleiro_instance)
+	return tabuleiro_instance
 	
 func set_main(main):
 	main_ref = main
@@ -28,7 +39,7 @@ func set_main(main):
 func _on_voltar_pressed():
 	main_ref.trocar_para("res://scenes/Niveis.tscn")
 
-func mapear_celulas() -> void:
+func mapear_celulas(cells_container) -> void:
 	# limpa variáveis
 	cells.clear()
 	unique_xs.clear()

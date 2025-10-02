@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjnmcg630poyy"]
+[gd_scene load_steps=3 format=3 uid="uid://cjnmcg630poyy"]
 
 [ext_resource type="Script" uid="uid://cr3s36h31gmvm" path="res://scripts/Board.gd" id="1_vsa3e"]
-[ext_resource type="PackedScene" uid="uid://draopuydvh2by" path="res://boards/cells_2x2.tscn" id="2_gkdw1"]
 [ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_vsa3e"]
 
 [node name="Board" type="Control"]
@@ -17,9 +16,6 @@ metadata/_edit_vertical_guides_ = [303.0, 1630.0]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-
-[node name="Cells2x2" parent="." instance=ExtResource("2_gkdw1")]
-layout_mode = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
