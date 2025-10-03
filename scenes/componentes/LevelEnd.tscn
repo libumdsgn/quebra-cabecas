@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6x7l75sappcl"]
+
+[ext_resource type="StyleBox" uid="uid://cr223yyaqhwo5" path="res://resources/BackGroundEnd.tres" id="1_vn0rh"]
+[ext_resource type="Texture2D" uid="uid://d1p4m3ghgo34h" path="res://assets/ui/JOGAR DE NOVO.png" id="2_gvl1h"]
+[ext_resource type="Texture2D" uid="uid://b0ksa610ts046" path="res://assets/ui/PROXIMO.png" id="3_3qdm6"]
+
+[node name="LevelEnd" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 928.0
+offset_bottom = 618.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_vn0rh")
+
+[node name="title" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_top = 12.0
+offset_right = 928.0
+offset_bottom = 168.0
+theme_override_colors/default_color = Color(0.8627451, 0.14117648, 0.1254902, 1)
+theme_override_font_sizes/normal_font_size = 66
+text = "NÍVEL CONCLUÍDO!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="movimentos" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_top = 138.0
+offset_right = 928.0
+offset_bottom = 416.0
+theme_override_colors/default_color = Color(0.8627451, 0.14117648, 0.1254902, 1)
+theme_override_font_sizes/normal_font_size = 180
+theme_override_font_sizes/bold_italics_font_size = 50
+theme_override_font_sizes/italics_font_size = 50
+text = "0000"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="label" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_top = 372.0
+offset_right = 928.0
+offset_bottom = 444.0
+theme_override_colors/default_color = Color(0.8627451, 0.14117648, 0.1254902, 1)
+theme_override_font_sizes/normal_font_size = 50
+text = "movimentos feitos =O"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Jogar" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 501.0
+offset_right = 753.7566
+offset_bottom = 649.3333
+scale = Vector2(0.6, 0.6)
+action_mode = 0
+texture_normal = ExtResource("2_gvl1h")
+stretch_mode = 0
+
+[node name="Proximo" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 470.00003
+offset_top = 501.00003
+offset_right = 1199.7566
+offset_bottom = 649.3334
+scale = Vector2(0.6, 0.6)
+action_mode = 0
+texture_normal = ExtResource("3_3qdm6")
+stretch_mode = 0
