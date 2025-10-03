@@ -21,8 +21,12 @@ func _ready() -> void:
 	mapear_celulas(cena_tabuleiro)
 	_print_puzzle_state_for_debug("Estado Inicial (Após Mapeamento)")
 	_shuffle()
+	_resetar_contagem_movimentos_shuffle()
 	_print_puzzle_state_for_debug("Estado Após Shuffle")
 	#_carregar_estado_salvo()
+
+func _resetar_contagem_movimentos_shuffle():
+	GameState.reset_moves(GameState.current_level)
 
 func _define_tabuleiro():
 	# define qual tabuleiro instanciar com base no nivel atual
@@ -161,13 +165,19 @@ func _is_neighbor(a, b) -> bool:
 	return false
 
 func _count_move():
-	GameState.moves_level
-
+	var lvl = GameState.current_level - 1
+	var moves_this_lvl = GameState.board_setup[lvl].total_moves
+	var actual_game = GameState.board_setup[lvl]
+	actual_game.total_moves = moves_this_lvl + 1
+	
+	GameState._atualiza_movs(actual_game.total_moves, lvl)
+	
 func _swap_with_empty(cell) -> void:
 	# troca posicoes lógicas e anima troca visual
 	var pos_cell = cell.posicao
 	var pos_empty = empty_cell.posicao
 	_count_move()
+	print("in SWAP: GameState.board_setup[GameState.current_level-1].total_moves: ", GameState.board_setup[GameState.current_level-1].total_moves)
 	# atualiza campos lógicos
 	cell.posicao = pos_empty
 	empty_cell.posicao = pos_cell
@@ -213,6 +223,7 @@ func _on_victory() -> void:
 	print("Puzzle resolvido! (nível %d)" % nivel)
 	# aqui você pode notificar o GameManager, tocar som, abrir tela de vitória, etc.
 	_desbloquear_nivel()
+	print("in VICTORY: GameState.board_setup[GameState.current_level].total_moves: ", GameState.board_setup[GameState.current_level-1].total_moves)
 	#_on_voltar_pressed()
 
 func _desbloquear_nivel():

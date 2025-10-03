@@ -16,3 +16,10 @@ func restart_lvl(lvl:int):
 			level.ordem = []
 			level.total_moves = 0
 			
+func reset_moves(lvl):
+	GameState.board_setup[GameState.current_level-1].total_moves = 0
+
+func _atualiza_movs(moves: int, level: int):
+	print("_atualiza -> level: ", level)
+
+	GameState.board_setup[level].total_moves = moves
