@@ -20,6 +20,8 @@ func _ready() -> void:
 	$LevelEnd/Proximo.pressed.connect(_on_proximo_pressed)
 	$LevelEnd.visible = false
 	
+	print("Montando Board. GameStatus.board: ", GameState.board_setup)
+	print("Montando Board. GameState.current_level: ", GameState.current_level)
 	var cena_tabuleiro = _define_tabuleiro()
 	mapear_celulas(cena_tabuleiro)
 	_print_puzzle_state_for_debug("Estado Inicial (Após Mapeamento)")
@@ -34,7 +36,8 @@ func _on_jogar_pressed():
 	
 func _on_proximo_pressed():
 	#levar para a proxima fase
-	print("Proxima fase!")
+	GameState.current_level = GameState.current_level + 1
+	main_ref.trocar_para("res://scenes/componentes/Board.tscn")
 	
 func _resetar_contagem_movimentos_shuffle():
 	GameState.reset_moves(GameState.current_level)
@@ -121,9 +124,6 @@ func mapear_celulas(cells_container) -> void:
 			var tex = load(level_path)
 			if "texture_normal" in c:
 				c.texture_normal = tex
-				print("Atribuindo imagem a celula: ", c)
-				print("/Imagem: ", level_path)
-				print("Posição dessa celula: ", c.posicao)
 		else:
 			push_warning("Imagem não encontrada para célula %s: %s" % [c.name, level_path])
 		
@@ -177,7 +177,7 @@ func _is_neighbor(a, b) -> bool:
 
 func _count_move():
 	var lvl = GameState.current_level - 1
-	var moves_this_lvl = GameState.board_setup[lvl].total_moves
+	var moves_this_lvl = GameState.get_moves(lvl)
 	var actual_game = GameState.board_setup[lvl]
 	actual_game.total_moves = moves_this_lvl + 1
 	
@@ -252,6 +252,7 @@ func _desbloquear_nivel():
 		var new_lvl = {
 			"nivel": next_lvl, 
 			"ordem":[],
+			"total_moves": 0,
 		}
 		GameState.board_setup.append(new_lvl)
 
@@ -416,8 +417,6 @@ func _is_solvable_state() -> bool:
 
 
 func _print_puzzle_state_for_debug(step_name: String) -> void:
-	print("\n--- DEBUG: %s ---" % step_name)
-	print("Grid atual:")
 	var grid_display = []
 	for r in range(linhas):
 		grid_display.append([])
@@ -439,9 +438,3 @@ func _print_puzzle_state_for_debug(step_name: String) -> void:
 	var empty_row = _get_empty_cell_row_from_bottom()
 	var solvable = _is_solvable_state()
 	var solved = _is_solved()
-
-	print("Contagem de Inversões: %d" % inv_count)
-	print("Linha da Célula Vazia (de baixo para cima): %d" % empty_row)
-	print("Estado Solúvel: %s" % str(solvable))
-	print("Estado Resolvido: %s" % str(solved))
-	print("-----------------------\n")

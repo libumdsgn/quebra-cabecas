@@ -23,5 +23,12 @@ func _atualiza_movs(moves: int, level: int):
 	GameState.board_setup[level].total_moves = moves
 
 func get_moves(lvl) -> int:
-	return GameState.board_setup[lvl].total_moves
+	var nivel_desejado = lvl + 1
+	for board in GameState.board_setup:
+		if nivel_desejado == board.nivel:
+			return board.total_moves
+	return 0
+	
+	
+	
 	
