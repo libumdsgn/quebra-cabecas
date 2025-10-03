@@ -21,3 +21,7 @@ func reset_moves(lvl):
 
 func _atualiza_movs(moves: int, level: int):
 	GameState.board_setup[level].total_moves = moves
+
+func get_moves(lvl) -> int:
+	return GameState.board_setup[lvl].total_moves
+	

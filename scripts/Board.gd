@@ -233,8 +233,13 @@ func _on_victory() -> void:
 	print("Puzzle resolvido! (nível %d)" % nivel)
 	# aqui você pode notificar o GameManager, tocar som, abrir tela de vitória, etc.
 	_desbloquear_nivel()
+	_mostra_placar()
 	$LevelEnd.visible = true
 	move_child($LevelEnd, get_child_count() - 1)
+
+func _mostra_placar():
+	var lvl = GameState.current_level - 1
+	$LevelEnd/Panel/movimentos.text = str(GameState.get_moves(lvl)).pad_zeros(4)
 
 func _desbloquear_nivel():
 	var next_lvl = GameState.current_level + 1
