@@ -16,6 +16,9 @@ const MOVE_ANIM_SECONDS := 0.16
 
 func _ready() -> void:
 	$Button.pressed.connect(_on_voltar_pressed)
+	$LevelEnd/Jogar.pressed.connect(_on_jogar_pressed)
+	$LevelEnd/Proximo.pressed.connect(_on_proximo_pressed)
+	$LevelEnd.visible = false
 	
 	var cena_tabuleiro = _define_tabuleiro()
 	mapear_celulas(cena_tabuleiro)
@@ -25,6 +28,14 @@ func _ready() -> void:
 	_print_puzzle_state_for_debug("Estado Após Shuffle")
 	#_carregar_estado_salvo()
 
+func _on_jogar_pressed():
+	#recarregar a fase!
+	print("Rejogar pressed!")
+	
+func _on_proximo_pressed():
+	#levar para a proxima fase
+	print("Proxima fase!")
+	
 func _resetar_contagem_movimentos_shuffle():
 	GameState.reset_moves(GameState.current_level)
 
@@ -177,7 +188,6 @@ func _swap_with_empty(cell) -> void:
 	var pos_cell = cell.posicao
 	var pos_empty = empty_cell.posicao
 	_count_move()
-	print("in SWAP: GameState.board_setup[GameState.current_level-1].total_moves: ", GameState.board_setup[GameState.current_level-1].total_moves)
 	# atualiza campos lógicos
 	cell.posicao = pos_empty
 	empty_cell.posicao = pos_cell
@@ -223,15 +233,13 @@ func _on_victory() -> void:
 	print("Puzzle resolvido! (nível %d)" % nivel)
 	# aqui você pode notificar o GameManager, tocar som, abrir tela de vitória, etc.
 	_desbloquear_nivel()
-	print("in VICTORY: GameState.board_setup[GameState.current_level].total_moves: ", GameState.board_setup[GameState.current_level-1].total_moves)
-	#_on_voltar_pressed()
+	$LevelEnd.visible = true
+	move_child($LevelEnd, get_child_count() - 1)
 
 func _desbloquear_nivel():
 	var next_lvl = GameState.current_level + 1
 	var next_lvl_ja_liberado = false
 	for board_lvl in GameState.board_setup:
-		print("board_lvl: ", board_lvl)
-		print("board_lvl[nivel] ", board_lvl["nivel"])
 		if board_lvl["nivel"] == next_lvl:
 			next_lvl_ja_liberado = true
 	
