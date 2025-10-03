@@ -160,11 +160,14 @@ func _is_neighbor(a, b) -> bool:
 		return true
 	return false
 
+func _count_move():
+	GameState.moves_level
+
 func _swap_with_empty(cell) -> void:
 	# troca posicoes lógicas e anima troca visual
 	var pos_cell = cell.posicao
 	var pos_empty = empty_cell.posicao
-
+	_count_move()
 	# atualiza campos lógicos
 	cell.posicao = pos_empty
 	empty_cell.posicao = pos_cell
@@ -210,7 +213,7 @@ func _on_victory() -> void:
 	print("Puzzle resolvido! (nível %d)" % nivel)
 	# aqui você pode notificar o GameManager, tocar som, abrir tela de vitória, etc.
 	_desbloquear_nivel()
-	_on_voltar_pressed()
+	#_on_voltar_pressed()
 
 func _desbloquear_nivel():
 	var next_lvl = GameState.current_level + 1
@@ -349,9 +352,6 @@ func _reset_to_solved_state() -> void:
 	# Verifica se o estado está realmente resolvido após o reset
 	if not _is_solved():
 		push_warning("O estado inicial resolvido não foi configurado corretamente após _reset_to_solved_state.")
-
-
-
 
 
 func _get_inversion_count() -> int:
