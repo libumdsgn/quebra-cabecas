@@ -270,7 +270,8 @@ func _salvar_estado() -> void:
 		data["cells"].append({
 			"id": int(c.id),
 			"pos": [int(c.posicao.x), int(c.posicao.y)],
-			"is_empty": bool(c.is_empty)
+			"is_empty": bool(c.is_empty),
+			"texture_path": c.texture_normal.resource_path if c.texture_normal and c.texture_normal.resource_path else ""
 		})
 	var path = "user://save_level_%d.json" % nivel
 	var file = FileAccess.open(path, FileAccess.ModeFlags.WRITE)
