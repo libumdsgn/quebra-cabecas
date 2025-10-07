@@ -17,29 +17,85 @@ script = ExtResource("1_gqd4y")
 
 [node name="Background" parent="." instance=ExtResource("2_eev7p")]
 layout_mode = 0
-offset_right = 1920.0
+offset_right = 3277.0
 offset_bottom = 1080.0
 mouse_filter = 2
 
 [node name="BotaoNivel" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
-offset_left = 73.0
-offset_top = 418.0
-offset_right = 131.04001
-offset_bottom = 558.96
+offset_left = 102.0
+offset_top = 535.0
+offset_right = 101.91998
+offset_bottom = 534.92
 
 [node name="BotaoNivel2" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
-offset_left = 524.0
-offset_top = 234.0
-offset_right = 582.04
-offset_bottom = 374.96002
+offset_left = 403.0
+offset_top = 342.0
+offset_right = 402.91998
+offset_bottom = 341.91998
 text = "2"
 
 [node name="BotaoNivel3" parent="." instance=ExtResource("1_gdal1")]
 layout_mode = 1
-offset_left = 973.0
-offset_top = 431.0
-offset_right = 1031.04
-offset_bottom = 571.96
+offset_left = 697.0
+offset_top = 556.0
+offset_right = 696.92
+offset_bottom = 555.92
 text = "3"
+
+[node name="BotaoNivel4" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 971.0
+offset_top = 335.0
+offset_right = 970.92
+offset_bottom = 334.91998
+text = "4"
+
+[node name="BotaoNivel5" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 1286.0
+offset_top = 540.0
+offset_right = 1285.9199
+offset_bottom = 539.92
+text = "5"
+
+[node name="BotaoNivel6" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 1572.0
+offset_top = 297.0
+offset_right = 1571.9199
+offset_bottom = 296.91998
+text = "6"
+
+[node name="BotaoNivel7" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 1858.0
+offset_top = 540.0
+offset_right = 1857.9199
+offset_bottom = 539.92
+text = "7"
+
+[node name="BotaoNivel8" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 2152.0
+offset_top = 314.0
+offset_right = 2151.92
+offset_bottom = 313.91998
+text = "8"
+
+[node name="BotaoNivel9" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 2455.0
+offset_top = 544.0
+offset_right = 2454.92
+offset_bottom = 543.92
+text = "9"
+
+[node name="BotaoNivel10" parent="." instance=ExtResource("1_gdal1")]
+layout_mode = 1
+offset_left = 2765.0
+offset_top = 310.0
+offset_right = 2764.92
+offset_bottom = 309.91998
+text = "10"
