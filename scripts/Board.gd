@@ -1,6 +1,6 @@
 extends Control
 
-const DEBUG := false
+const DEBUG := true
 
 var main_ref 
 var cells: Array = []                # lista de nós Cell
@@ -33,6 +33,7 @@ func _ready() -> void:
 		_resetar_contagem_movimentos_shuffle()
 	if DEBUG:
 		_print_map_summary("Após possível _carregar_estado_salvo / _shuffle")
+	_atualiza_game_state()
 	_salvar_estado()
 
 func _on_jogar_pressed():
@@ -61,7 +62,6 @@ func _deletar_nivel_salvo(nivel: int) -> bool:
 		print("✅ Save do nível %d deletado com sucesso (%s)" % [nivel, path])
 	return true
 	
-
 func _on_proximo_pressed():
 	GameState.current_level = GameState.current_level + 1
 	main_ref.trocar_para("res://scenes/componentes/Board.tscn")
@@ -231,12 +231,33 @@ func _is_neighbor(a, b) -> bool:
 	return false
 
 func _count_move():
+	if DEBUG:
+		print("\n🔹 Contando movimento...")
+
 	var lvl = GameState.current_level - 1
+	if DEBUG:
+		print("   → Nível atual: %d (índice no array: %d)" % [GameState.current_level, lvl])
+		
+
 	var moves_this_lvl = GameState.get_moves(lvl)
+	if DEBUG:
+		print("   → Movimentos atuais registrados para este nível: %d" % moves_this_lvl)
+		print("   → GameState::todos os boards ", GameState.board_setup)
+
 	var actual_game = GameState.board_setup[lvl]
+	if DEBUG:
+		print("   → Estado atual antes da atualização:")
+		print("      nível:", actual_game.nivel)
+		print("      total_moves (antes):", actual_game.total_moves)
+
+	# Atualiza o total de movimentos
 	actual_game.total_moves = moves_this_lvl + 1
-	
 	GameState._atualiza_movs(actual_game.total_moves, lvl)
+
+	if DEBUG:
+		print("   ✅ total_moves atualizado para:", actual_game.total_moves)
+		print("   🔁 Atualização enviada para GameState._atualiza_movs(lvl=%d)" % lvl)
+		print("🔸 Contagem de movimentos concluída.\n")
 	
 func _swap_with_empty(cell) -> void:
 	# troca posicoes lógicas e anima troca visual
@@ -620,3 +641,61 @@ func _print_map_summary(prefix: String) -> void:
 		prefix, colunas, linhas, str(unique_xs), str(unique_ys), cells.size()
 	])
 	_print_cells_summary(prefix)
+	
+func _atualiza_game_state():
+	if DEBUG:
+		print("\n🔸 Atualizando GameState a partir dos saves locais...")
+
+	var dir := DirAccess.open("user://")
+	if dir == null:
+		push_error("Erro ao abrir diretório user://")
+		return
+	
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	
+	while file_name != "":
+		if file_name.begins_with("save_level_") and file_name.ends_with(".json"):
+			var full_path = "user://%s" % file_name
+			var file = FileAccess.open(full_path, FileAccess.ModeFlags.READ)
+			if file:
+				var json_text = file.get_as_text()
+				file.close()
+
+				var data = JSON.parse_string(json_text)
+				if data == null or typeof(data) != TYPE_DICTIONARY:
+					push_warning("Arquivo %s ignorado: formato inválido." % file_name)
+					file_name = dir.get_next()
+					continue
+
+				# extrai o número do nível (por exemplo, 3 de "save_level_3.json")
+				var nivel = int(file_name.get_slice("_", 2).split(".")[0])
+				var total_moves = data.get("total_moves", 0)
+				var ordem = data.get("ordem", [])
+
+				# verifica se esse nível já existe no GameState
+				var existing_index = -1
+				for i in range(GameState.board_setup.size()):
+					if GameState.board_setup[i]["nivel"] == nivel:
+						existing_index = i
+						break
+
+				var info_nivel = {
+					"nivel": nivel,
+					"ordem": ordem,
+					"total_moves": total_moves
+				}
+
+				if existing_index != -1:
+					GameState.board_setup[existing_index] = info_nivel
+				else:
+					GameState.board_setup.append(info_nivel)
+
+				if DEBUG:
+					print("   🔹 Nível %d carregado no GameState (%s)" % [nivel, full_path])
+		file_name = dir.get_next()
+
+	dir.list_dir_end()
+
+	if DEBUG:
+		print("✅ GameState atualizado com %d níveis." % GameState.board_setup.size())
