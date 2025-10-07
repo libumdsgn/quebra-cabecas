@@ -36,7 +36,31 @@ func _ready() -> void:
 
 func _on_jogar_pressed():
 	print("Rejogar pressed!")
+	_deletar_nivel_salvo(GameState.current_level)
+	main_ref.trocar_para("res://scenes/componentes/Board.tscn")
 	
+func _deletar_nivel_salvo(nivel: int) -> bool:
+	if DEBUG:
+		print("\n🗑️ Deletando estado salvo do nível %d..." % nivel)
+
+	var path = "user://save_level_%d.json" % nivel
+
+	# Verifica se o arquivo realmente existe
+	if not FileAccess.file_exists(path):
+		push_warning("Nenhum save encontrado para o nível %d (%s)" % [nivel, path])
+		return false
+
+	# Tenta remover o arquivo
+	var err = DirAccess.remove_absolute(path)
+	if err != OK:
+		push_error("Falha ao deletar o arquivo de save do nível %d: %s" % [nivel, path])
+		return false
+
+	if DEBUG:
+		print("✅ Save do nível %d deletado com sucesso (%s)" % [nivel, path])
+	return true
+	
+
 func _on_proximo_pressed():
 	GameState.current_level = GameState.current_level + 1
 	main_ref.trocar_para("res://scenes/componentes/Board.tscn")
