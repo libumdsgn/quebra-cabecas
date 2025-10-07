@@ -1,6 +1,6 @@
 extends Control
 
-const DEBUG := true
+const DEBUG := false
 
 var main_ref 
 var cells: Array = []                # lista de nós Cell
@@ -33,6 +33,7 @@ func _ready() -> void:
 		_resetar_contagem_movimentos_shuffle()
 	if DEBUG:
 		_print_map_summary("Após possível _carregar_estado_salvo / _shuffle")
+	_salvar_estado()
 
 func _on_jogar_pressed():
 	print("Rejogar pressed!")
