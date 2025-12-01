@@ -524,8 +524,8 @@ func _shuffle(movimentos: int = 100) -> void:
 			var temp_pos = cell1.posicao
 			cell1.posicao = cell2.posicao
 			cell2.posicao = temp_pos
-			cell1.rect_position = _grid_to_rect_pos(cell1.posicao)
-			cell2.rect_position = _grid_to_rect_pos(cell2.posicao)
+			cell1.position = _grid_to_rect_pos(cell1.posicao)
+			cell2.position = _grid_to_rect_pos(cell2.posicao)
 		else:
 			push_warning("Não foi possível garantir a solubilidade: menos de duas células não vazias para trocar.")
 
