@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://jgjo70qp5qrp"]
+[gd_scene load_steps=5 format=3 uid="uid://jgjo70qp5qrp"]
 
 [ext_resource type="PackedScene" uid="uid://devjft14b0xg2" path="res://scenes/BotaoNivel.tscn" id="1_gdal1"]
 [ext_resource type="Script" uid="uid://drd3g3uu244in" path="res://scripts/Niveis.gd" id="1_gqd4y"]
 [ext_resource type="PackedScene" uid="uid://dervolcxhwh4" path="res://scenes/componentes/Background.tscn" id="2_eev7p"]
+[ext_resource type="Script" uid="uid://df10y58s32ul3" path="res://scripts/cameracontroller.gd" id="2_oqexg"]
 
 [node name="Niveis" type="Control"]
 layout_mode = 3
@@ -99,3 +100,8 @@ offset_top = 310.0
 offset_right = 2764.92
 offset_bottom = 309.91998
 text = "10"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(64, -1)
+anchor_mode = 0
+script = ExtResource("2_oqexg")
