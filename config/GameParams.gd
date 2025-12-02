@@ -8,14 +8,14 @@ var tipo_boards = {
 }
 
 var nivel_config ={
-	1: tipo_boards["DEFAULT"],
-	2: tipo_boards["DEFAULT"],
+	1: tipo_boards["3X2"],
+	2: tipo_boards["3X2"],
 	3: tipo_boards["3X2"],
-	4: tipo_boards["3X2"],
-	5: tipo_boards["3X2"],
+	4: tipo_boards["3X4"],
+	5: tipo_boards["3X4"],
 	6: tipo_boards["3X4"],
-	7: tipo_boards["3X4"],
-	8: tipo_boards["3X4"],
+	7: tipo_boards["4X5"],
+	8: tipo_boards["4X5"],
 	9: tipo_boards["4X5"],
 	10: tipo_boards["4X5"],
 	11: tipo_boards["4X5"],

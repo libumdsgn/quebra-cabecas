@@ -1,6 +1,6 @@
 extends Control
 
-const DEBUG := true
+const DEBUG := false
 
 var main_ref 
 var cells: Array = []                # lista de nós Cell
@@ -486,7 +486,7 @@ func _carregar_estado_salvo() -> bool:
 		_print_cells_summary("Após _carregar_estado_salvo")
 		_print_puzzle_state_for_debug("Após _carregar_estado_salvo")
 
-	print("Estado carregado com sucesso de %s" % path)
+		print("Estado carregado com sucesso de %s" % path)
 	return true
 	
 func _shuffle(movimentos: int = 100) -> void:
