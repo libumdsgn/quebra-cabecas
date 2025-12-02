@@ -1,6 +1,6 @@
 extends Control
 
-const DEBUG := true
+const DEBUG := false
 
 var main_ref
 
